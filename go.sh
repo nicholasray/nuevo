@@ -19,10 +19,7 @@ if ! command -v brew >/dev/null; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-# Install Brew Cask to make app installation easy
-fancy_echo "Installing cask..."
-brew tap homebrew/cask
-
+# Install Terminal Stuff
 brew install zsh
 brew install tmux
 brew install git
@@ -32,6 +29,20 @@ brew install postgresql
 brew install mysql
 brew install chruby
 brew install ruby-install
+brew install redis
 
-fancy_echo "Installing Ruby 2.5.1..."
-ruby-install ruby-2.5.1
+# Install Brew Cask to make app installation easy
+fancy_echo "Installing cask..."
+brew tap homebrew/cask
+brew cask install google-chrome
+brew cask install spectacle
+brew cask install docker
+brew cask install firefox
+brew cask install sourcetree
+
+# Install recent ruby version
+
+if [ ! -d "$HOME/.rubies/ruby-2.5.1" ]; then
+  fancy_echo "Installing Ruby 2.5.1..."
+  ruby-install ruby-2.5.1
+fi
