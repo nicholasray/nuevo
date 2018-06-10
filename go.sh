@@ -84,7 +84,7 @@ function install_pkg_if_absent() {
   fi
 }
 
-# Install Packages
+# Install Brews
 install_pkg_if_absent zsh
 install_pkg_if_absent tmux
 install_pkg_if_absent git
@@ -159,6 +159,7 @@ function install_app_if_absent() {
   fi
 }
 
+# Install apps
 install_app_if_absent google-chrome
 install_app_if_absent spectacle
 install_app_if_absent docker
@@ -188,6 +189,7 @@ function install_gem_if_absent() {
   fi
 }
 
+# Install gems
 install_gem_if_absent "neovim"
 
 # Install nvm
@@ -215,9 +217,11 @@ function install_npm_pkg_if_absent() {
   fi
 }
 
-install_npm_pkg_if_absent "neovim"
-install_npm_pkg_if_absent "tern"
-install_npm_pkg_if_absent "yarn"
+# Install npm packages
+install_npm_pkg_if_absent neovim
+install_npm_pkg_if_absent tern
+install_npm_pkg_if_absent yarn
+install_npm_pkg_if_absent prettier
 
 fancy_echo "SUCCESS! Enjoy your new setup!"
 exit 0
