@@ -78,7 +78,7 @@ function install_pkg_if_absent() {
   fancy_echo "Checking if $pkg exists..."
   if ! brew ls --versions $pkg > /dev/null 2>&1; then
     fancy_echo "Installing $pkg..."
-    brew install "$pkg"
+    brew install "$pkg" $2
   fi
 }
 
@@ -97,6 +97,7 @@ install_pkg_if_absent python
 install_pkg_if_absent ansible
 install_pkg_if_absent reattach-to-user-namespace
 install_pkg_if_absent the_silver_searcher
+install_pkg_if_absent go
 
 # Make zsh default shell
 function update_shell() {
