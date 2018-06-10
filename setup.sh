@@ -1,6 +1,4 @@
 #!/bin/sh
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 trap cleanup INT
 
 set -e
