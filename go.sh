@@ -38,6 +38,10 @@ function install_dotfiles() {
       continue
     fi
 
+    if [ "$file" == "$HOME/dotfiles/.git" ]; then
+      continue
+    fi
+
     local sym_file_name="$( basename $file )" 
     local sym="$HOME/$sym_file_name"
 
@@ -93,6 +97,7 @@ install_pkg_if_absent ruby-install
 install_pkg_if_absent redis
 install_pkg_if_absent python
 install_pkg_if_absent ansible
+install_pkg_if_absent reattach-to-user-namespace
 
 # Make zsh default shell
 function update_shell() {
@@ -148,8 +153,8 @@ function install_app_if_absent() {
 
   fancy_echo "Checking if $pkg exists..."
   if ! brew cask ls --versions $pkg > /dev/null 2>&1; then
-    fancy_echo "Installing $1..."
-    brew cask install --force "$1"
+    fancy_echo "Installing $pkg..."
+    brew cask install --force "$pkg"
   fi
 }
 
@@ -164,11 +169,50 @@ install_app_if_absent java
 install_app_if_absent intellij-idea-ce
 
 # Install recent ruby version
-
 if [ ! -d "$HOME/.rubies/ruby-2.5.1" ]; then
   fancy_echo "Installing Ruby 2.5.1..."
   ruby-install ruby-2.5.1
 fi
+
+function install_gem_if_absent() {
+  local pkg="$1"
+
+  fancy_echo "Checking if $pkg exists..."
+  if ! gem list -i $pkg > /dev/null 2>&1; then
+    fancy_echo "Installing $pkg..."
+    gem install neovim
+  fi
+}
+
+install_gem_if_absent "neovim"
+
+# Install nvm
+fancy_echo "Checking if nvm and node exists..."
+if command -v nvm > /dev/null 2>&1; then
+  unset NVM_DIR
+  fancy_echo "Installing nvm..."
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+  # Install node
+  fancy_echo "Install Node..."
+  nvm install node
+fi
+
+function install_npm_pkg_if_absent() {
+  local pkg="$1"
+
+  fancy_echo "Checking if $pkg exists..."
+  if ! npm list -g $pkg > /dev/null 2>&1; then
+    fancy_echo "Installing $pkg..."
+    npm i -g $pkg
+  fi
+}
+
+install_npm_pkg_if_absent "neovim"
+install_npm_pkg_if_absent "tern"
 
 fancy_echo "SUCCESS! Enjoy your new setup!"
 exit 0
