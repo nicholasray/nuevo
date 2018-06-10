@@ -99,6 +99,7 @@ install_pkg_if_absent python
 install_pkg_if_absent ansible
 install_pkg_if_absent reattach-to-user-namespace
 
+
 # Make zsh default shell
 function update_shell() {
   local shell_path;
@@ -168,6 +169,8 @@ install_app_if_absent slack
 install_app_if_absent java
 install_app_if_absent intellij-idea-ce
 
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+chruby 2.5.1
 # Install recent ruby version
 if [ ! -d "$HOME/.rubies/ruby-2.5.1" ]; then
   fancy_echo "Installing Ruby 2.5.1..."
