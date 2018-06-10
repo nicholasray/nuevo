@@ -1,6 +1,6 @@
 # Nuevo
 
-After receiving a new computer, I went through a lot of pain getting my development environment setup. So I
+After receiving a new macbook laptop, I went through a lot of pain getting my development environment setup. So I
 tried to write an idempotent bash script to automate it for next time. Thank you [Thoughtbot](https://github.com/thoughtbot/laptop) for the inspiration!
 
 This script installs brew packages (neovim, zsh, tmux, postgres, etc), apps (Chrome, Spectacle, Sourcetree, etc), npm packages (tern, prettier, etc), and ruby gems (neovim, etc) that I find myself using on a regular basis. It also clones my [dotfiles](https://github.com/nicholasray/dotfiles) and symlinks them in the $HOME directory.
