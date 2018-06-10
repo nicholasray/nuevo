@@ -1,7 +1,6 @@
 #!/bin/sh
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-
 trap cleanup INT
 
 set -e
@@ -47,7 +46,7 @@ function install_pkg_if_absent() {
   fi
 }
 
-# Install Terminal Stuff
+# Install Packages
 install_pkg_if_absent zsh
 install_pkg_if_absent tmux
 install_pkg_if_absent git
@@ -58,6 +57,19 @@ install_pkg_if_absent mysql
 install_pkg_if_absent chruby
 install_pkg_if_absent ruby-install
 install_pkg_if_absent redis
+install_pkg_if_absent python
+install_pkg_if_absent ansible
+
+fancy_echo "Adding python neovim support..."
+
+if ! pip2 show neovim > /dev/null 2>&1; then
+  pip2 install --upgrade neovim
+fi
+
+
+if ! pip3 show neovim > /dev/null 2>&1; then
+  pip3 install --upgrade neovim
+fi
 
 # Install Brew Cask to make app installation easy
 fancy_echo "Tapping cask..."
