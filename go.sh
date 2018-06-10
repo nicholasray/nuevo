@@ -79,8 +79,8 @@ function install_pkg_if_absent() {
 
   fancy_echo "Checking if $pkg exists..."
   if ! brew ls --versions $pkg > /dev/null 2>&1; then
-    fancy_echo "Installing $1..."
-    brew install "$1"
+    fancy_echo "Installing $pkg..."
+    brew install "$pkg"
   fi
 }
 
@@ -152,7 +152,7 @@ brew tap homebrew/cask
 function install_app_if_absent() {
   local pkg="$1"
 
-  fancy_echo "Checking if $pkg exists..."
+  fancy_echo "Checking if app $pkg exists..."
   if ! brew cask ls --versions $pkg > /dev/null 2>&1; then
     fancy_echo "Installing $pkg..."
     brew cask install --force "$pkg"
@@ -180,7 +180,7 @@ fi
 function install_gem_if_absent() {
   local pkg="$1"
 
-  fancy_echo "Checking if $pkg exists..."
+  fancy_echo "Checking if gem $pkg exists..."
   if ! gem list -i $pkg > /dev/null 2>&1; then
     fancy_echo "Installing $pkg..."
     gem install neovim
@@ -207,7 +207,7 @@ fi
 function install_npm_pkg_if_absent() {
   local pkg="$1"
 
-  fancy_echo "Checking if $pkg exists..."
+  fancy_echo "Checking if npm package $pkg exists..."
   if ! npm list -g $pkg > /dev/null 2>&1; then
     fancy_echo "Installing $pkg..."
     npm i -g $pkg
@@ -216,6 +216,7 @@ function install_npm_pkg_if_absent() {
 
 install_npm_pkg_if_absent "neovim"
 install_npm_pkg_if_absent "tern"
+install_npm_pkg_if_absent "yarn"
 
 fancy_echo "SUCCESS! Enjoy your new setup!"
 exit 0
