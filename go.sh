@@ -26,6 +26,40 @@ if [ ! -d  "$HOME/dotfiles" ]; then
   git clone git@github.com:nicholasray/dotfiles.git "$HOME/dotfiles"
 fi
 
+function install_dotfiles() {
+  cd $HOME
+
+  for file in "$HOME/dotfiles/".*; do
+    if [ "$file" == "$HOME/dotfiles/." ]; then
+      continue
+    fi
+
+    if [ "$file" == "$HOME/dotfiles/.." ]; then
+      continue
+    fi
+
+    local sym_file_name="$( basename $file )" 
+    local sym="$HOME/$sym_file_name"
+
+    if [ ! -e $sym ]; then
+      # file doesn't already exist
+      ln -s "$file" "$sym"
+    fi
+
+    while true; do
+      read -p "$sym already exists. Do you want to overwrite it? " yn
+       case $yn in
+         [Yy]* ) ln -sf "$file" "$sym"; break;;
+         [Nn]* ) break;;
+         * ) echo "Please answer yes or no.";;
+       esac
+    done
+  done
+}
+
+fancy_echo "Installing dotfiles..."
+install_dotfiles
+
 # Show hidden files in mac
 fancy_echo "Enable apple finder to show hidden files..."
 defaults write com.apple.finder AppleShowAllFiles YES
@@ -60,8 +94,33 @@ install_pkg_if_absent redis
 install_pkg_if_absent python
 install_pkg_if_absent ansible
 
-fancy_echo "Adding python neovim support..."
+# Make zsh default shell
+function update_shell() {
+  local shell_path;
+  shell_path="$(which zsh)"
 
+  fancy_echo "Changing default shell to zsh ..."
+  if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
+    fancy_echo "Adding '$shell_path' to /etc/shells"
+    sudo sh -c "echo $shell_path >> /etc/shells"
+  fi
+
+  chsh -s "$shell_path"
+  source ~/.zshrc
+}
+
+case "$SHELL" in
+  */zsh)
+    if [ "$(which zsh)" != '/usr/local/bin/zsh' ] ; then
+      update_shell
+    fi
+    ;;
+  *)
+    update_shell
+    ;;
+esac
+
+fancy_echo "Adding python neovim support..."
 if ! pip2 show neovim > /dev/null 2>&1; then
   pip2 install --upgrade neovim
 fi
@@ -70,6 +129,15 @@ fi
 if ! pip3 show neovim > /dev/null 2>&1; then
   pip3 install --upgrade neovim
 fi
+
+# Install vim-plug
+fancy_echo "Installing vim-plug..."
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Install vim plugins
+fancy_echo "Install vim plugins..."
+vim +PlugInstall +qall
 
 # Install Brew Cask to make app installation easy
 fancy_echo "Tapping cask..."
@@ -92,6 +160,8 @@ install_app_if_absent firefox
 install_app_if_absent sourcetree
 install_app_if_absent iterm2
 install_app_if_absent slack
+install_app_if_absent java
+install_app_if_absent intellij-idea-ce
 
 # Install recent ruby version
 
