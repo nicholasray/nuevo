@@ -155,6 +155,11 @@ function install_app_if_absent() {
   fi
 }
 
+function install_java() {
+  brew tap caskroom/versions
+  install_app_if_absent java8
+}
+
 # Install apps
 install_app_if_absent google-chrome
 install_app_if_absent spectacle
@@ -163,9 +168,9 @@ install_app_if_absent firefox
 install_app_if_absent sourcetree
 install_app_if_absent iterm2
 install_app_if_absent slack
-install_app_if_absent java
 install_app_if_absent intellij-idea-ce
 install_app_if_absent vagrant
+install_java
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 chruby 2.5.1
