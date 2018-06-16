@@ -4,23 +4,20 @@ trap cleanup INT
 set -e
 
 function cleanup() {
-  fancy_echo "Exiting..."
+  println "Exiting..."
   exit 1
 }
 
-fancy_echo() {
-  local fmt="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
+println() {
+  printf "\n%s\n" "$1"
 }
 
-fancy_echo "You're about to have your computer setup in no time. Just sit back and relax..."
+println "You're about to have your computer setup in no time. Just sit back and relax..."
 
 mkdir -p "$HOME/Development"
 
 if [ ! -d  "$HOME/dotfiles" ]; then
-  fancy_echo "Cloning dot_files..."
+  println "Cloning dot_files..."
   git clone git@github.com:nicholasray/dotfiles.git "$HOME/dotfiles"
 fi
 
@@ -59,25 +56,25 @@ function install_dotfiles() {
   done
 }
 
-fancy_echo "Installing dotfiles..."
+println "Installing dotfiles..."
 install_dotfiles
 
 # Show hidden files in mac
-fancy_echo "Enable apple finder to show hidden files..."
+println "Enable apple finder to show hidden files..."
 defaults write com.apple.finder AppleShowAllFiles YES
 
 # Install brew
 if ! command -v brew >/dev/null; then
-  fancy_echo "Installing homebrew..."
+  println "Installing homebrew..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 function install_pkg_if_absent() {
   local pkg="$1"
 
-  fancy_echo "Checking if $pkg exists..."
+  println "Checking if $pkg exists..."
   if ! brew ls --versions $pkg > /dev/null 2>&1; then
-    fancy_echo "Installing $pkg..."
+    println "Installing $pkg..."
     brew install "$pkg" $2
   fi
 }
@@ -104,9 +101,9 @@ function update_shell() {
   local shell_path;
   shell_path="$(which zsh)"
 
-  fancy_echo "Changing default shell to zsh ..."
+  println "Changing default shell to zsh ..."
   if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
-    fancy_echo "Adding '$shell_path' to /etc/shells"
+    println "Adding '$shell_path' to /etc/shells"
     sudo sh -c "echo $shell_path >> /etc/shells"
   fi
 
@@ -125,7 +122,7 @@ case "$SHELL" in
     ;;
 esac
 
-fancy_echo "Adding python neovim support..."
+println "Adding python neovim support..."
 if ! pip2 show neovim > /dev/null 2>&1; then
   pip2 install --upgrade neovim
 fi
@@ -136,24 +133,24 @@ if ! pip3 show neovim > /dev/null 2>&1; then
 fi
 
 # Install vim-plug
-fancy_echo "Installing vim-plug..."
+println "Installing vim-plug..."
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Install vim plugins
-fancy_echo "Install vim plugins..."
+println "Install vim plugins..."
 vim +PlugInstall +qall
 
 # Install Brew Cask to make app installation easy
-fancy_echo "Tapping cask..."
+println "Tapping cask..."
 brew tap homebrew/cask
 
 function install_app_if_absent() {
   local pkg="$1"
 
-  fancy_echo "Checking if app $pkg exists..."
+  println "Checking if app $pkg exists..."
   if ! brew cask ls --versions $pkg > /dev/null 2>&1; then
-    fancy_echo "Installing $pkg..."
+    println "Installing $pkg..."
     brew cask install --force "$pkg"
   fi
 }
@@ -174,16 +171,16 @@ source /usr/local/opt/chruby/share/chruby/chruby.sh
 chruby 2.5.1
 # Install recent ruby version
 if [ ! -d "$HOME/.rubies/ruby-2.5.1" ]; then
-  fancy_echo "Installing Ruby 2.5.1..."
+  println "Installing Ruby 2.5.1..."
   ruby-install ruby-2.5.1
 fi
 
 function install_gem_if_absent() {
   local pkg="$1"
 
-  fancy_echo "Checking if gem $pkg exists..."
+  println "Checking if gem $pkg exists..."
   if ! gem list -i $pkg > /dev/null 2>&1; then
-    fancy_echo "Installing $pkg..."
+    println "Installing $pkg..."
     gem install neovim
   fi
 }
@@ -192,26 +189,26 @@ function install_gem_if_absent() {
 install_gem_if_absent "neovim"
 
 # Install nvm
-fancy_echo "Checking if nvm and node exists..."
+println "Checking if nvm and node exists..."
 if command -v nvm > /dev/null 2>&1; then
   unset NVM_DIR
-  fancy_echo "Installing nvm..."
+  println "Installing nvm..."
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
   # Install node
-  fancy_echo "Install Node..."
+  println "Install Node..."
   nvm install node
 fi
 
 function install_npm_pkg_if_absent() {
   local pkg="$1"
 
-  fancy_echo "Checking if npm package $pkg exists..."
+  println "Checking if npm package $pkg exists..."
   if ! npm list -g $pkg > /dev/null 2>&1; then
-    fancy_echo "Installing $pkg..."
+    println "Installing $pkg..."
     npm i -g $pkg
   fi
 }
@@ -222,5 +219,5 @@ install_npm_pkg_if_absent tern
 install_npm_pkg_if_absent yarn
 install_npm_pkg_if_absent prettier
 
-fancy_echo "SUCCESS! Enjoy your new setup!"
+println "SUCCESS! Enjoy your new setup!"
 exit 0
