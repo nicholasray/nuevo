@@ -8,7 +8,7 @@ function cleanup() {
   exit 1
 }
 
-println() {
+function println() {
   printf "\n%s\n" "$1"
 }
 
