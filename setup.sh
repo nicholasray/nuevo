@@ -144,6 +144,7 @@ vim +PlugInstall +qall
 # Install Brew Cask to make app installation easy
 println "Tapping cask..."
 brew tap homebrew/cask
+brew tap caskroom/versions
 
 function install_app_if_absent() {
   local pkg="$1"
@@ -155,22 +156,18 @@ function install_app_if_absent() {
   fi
 }
 
-function install_java() {
-  brew tap caskroom/versions
-  install_app_if_absent java8
-}
-
 # Install apps
 install_app_if_absent google-chrome
 install_app_if_absent spectacle
 install_app_if_absent docker
 install_app_if_absent firefox
 install_app_if_absent sourcetree
-install_app_if_absent iterm2
+# Download iterm2-nightly for metal renderer which improves render performance
+install_app_if_absent iterm2-nightly
 install_app_if_absent slack
 install_app_if_absent intellij-idea-ce
 install_app_if_absent vagrant
-install_java
+install_app_if_absent java8
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 chruby 2.5.1
