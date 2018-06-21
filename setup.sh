@@ -95,6 +95,7 @@ install_pkg_if_absent ansible
 install_pkg_if_absent reattach-to-user-namespace
 install_pkg_if_absent the_silver_searcher
 install_pkg_if_absent go
+install_pkg_if_absent fzf
 
 # Make zsh default shell
 function update_shell() {
