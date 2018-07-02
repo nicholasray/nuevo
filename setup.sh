@@ -170,6 +170,7 @@ install_app_if_absent intellij-idea-ce
 install_app_if_absent vagrant
 install_app_if_absent java8
 install_app_if_absent adobe-acrobat-reader
+install_app_if_absent 1password
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 chruby 2.5.1
