@@ -163,8 +163,8 @@ install_app_if_absent spectacle
 install_app_if_absent docker
 install_app_if_absent firefox
 install_app_if_absent sourcetree
-# Download iterm2-nightly for metal renderer which improves render performance
-install_app_if_absent iterm2-nightly
+# Download iterm2-beta for metal renderer which improves render performance
+install_app_if_absent iterm2-beta
 install_app_if_absent slack
 install_app_if_absent intellij-idea-ce
 install_app_if_absent vagrant
@@ -172,6 +172,7 @@ install_app_if_absent java8
 install_app_if_absent adobe-acrobat-reader
 install_app_if_absent 1password
 install_app_if_absent sequel-pro
+install_app_if_absent virtualbox
 
 # Install recent ruby version
 if [ ! -d "$HOME/.rubies/ruby-2.5.1" ]; then
