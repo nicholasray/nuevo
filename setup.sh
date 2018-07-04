@@ -173,13 +173,13 @@ install_app_if_absent adobe-acrobat-reader
 install_app_if_absent 1password
 install_app_if_absent sequel-pro
 
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-chruby 2.5.1
 # Install recent ruby version
 if [ ! -d "$HOME/.rubies/ruby-2.5.1" ]; then
   println "Installing Ruby 2.5.1..."
   ruby-install ruby-2.5.1
 fi
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+chruby 2.5.1
 
 function install_gem_if_absent() {
   local pkg="$1"
