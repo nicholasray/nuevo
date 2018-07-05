@@ -96,6 +96,8 @@ install_pkg_if_absent reattach-to-user-namespace
 install_pkg_if_absent the_silver_searcher
 install_pkg_if_absent go
 install_pkg_if_absent fzf
+install_pkg_if_absent git-review
+
 
 # Make zsh default shell
 function update_shell() {
