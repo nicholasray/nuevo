@@ -208,6 +208,7 @@ if command -v nvm > /dev/null 2>&1; then
   # Install node
   println "Install Node..."
   nvm install --lts
+  nvm alias default lts/*
 fi
 
 function install_npm_pkg_if_absent() {
