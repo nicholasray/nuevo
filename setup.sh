@@ -93,6 +93,7 @@ install_pkg_if_absent chruby
 install_pkg_if_absent ruby-install
 install_pkg_if_absent redis
 install_pkg_if_absent python
+install_pkg_if_absent python@2
 install_pkg_if_absent ansible
 install_pkg_if_absent reattach-to-user-namespace
 install_pkg_if_absent the_silver_searcher
