@@ -97,6 +97,7 @@ install_pkg_if_absent the_silver_searcher
 install_pkg_if_absent go
 install_pkg_if_absent fzf
 install_pkg_if_absent awscli
+install_pkg_if_absent jq
 
 # Make zsh default shell
 function update_shell() {
@@ -164,16 +165,16 @@ install_app_if_absent spectacle
 install_app_if_absent docker
 install_app_if_absent firefox
 install_app_if_absent sourcetree
-# Download iterm2-nightly for metal renderer which improves render performance
-install_app_if_absent iterm2-nightly
 install_app_if_absent slack
-install_app_if_absent intellij-idea-ce
 install_app_if_absent vagrant
 install_app_if_absent java8
 install_app_if_absent adobe-acrobat-reader
 install_app_if_absent 1password
 install_app_if_absent sequel-pro
 install_app_if_absent virtualbox
+install_app_if_absent kitty
+install_app_if_absent irccloud
+install_app_if_absent visual-studio-code
 
 # Install recent ruby version
 if [ ! -d "$HOME/.rubies/ruby-2.5.1" ]; then
