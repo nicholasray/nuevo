@@ -116,6 +116,7 @@ function update_shell() {
   fi
 
   chsh -s "$shell_path"
+  zsh
   source ~/.zshrc
 }
 
