@@ -67,6 +67,8 @@ defaults write com.apple.finder AppleShowAllFiles YES
 if ! command -v brew >/dev/null; then
   println "Installing homebrew..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+  brew update
 fi
 
 function install_pkg_if_absent() {
@@ -98,6 +100,9 @@ install_pkg_if_absent go
 install_pkg_if_absent fzf
 install_pkg_if_absent awscli
 install_pkg_if_absent jq
+install_pkg_if_absent ripgrep
+install_pkg_if_absent php
+install_pkg_if_absent composer
 
 # Make zsh default shell
 function update_shell() {
