@@ -178,7 +178,6 @@ install_app_if_absent java8
 install_app_if_absent adobe-acrobat-reader
 install_app_if_absent 1password
 install_app_if_absent sequel-pro
-install_app_if_absent virtualbox
 install_app_if_absent kitty
 install_app_if_absent irccloud
 install_app_if_absent visual-studio-code
@@ -205,20 +204,18 @@ function install_gem_if_absent() {
 install_gem_if_absent "neovim"
 
 # Install nvm
-println "Checking if nvm and node exists..."
-if command -v nvm > /dev/null 2>&1; then
-  unset NVM_DIR
-  println "Installing nvm..."
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+println "Installing nvm and node..."
+unset NVM_DIR
+println "Installing nvm..."
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-  # Install node
-  println "Install Node..."
-  nvm install --lts
-  nvm alias default lts/*
-fi
+# Install node
+println "Install Node..."
+nvm install --lts
+nvm alias default lts/*
 
 function install_npm_pkg_if_absent() {
   local pkg="$1"
@@ -234,7 +231,7 @@ function install_npm_pkg_if_absent() {
 install_npm_pkg_if_absent neovim
 install_npm_pkg_if_absent tern
 install_npm_pkg_if_absent yarn
-install_npm_pkg_if_absent prettier
+install_npm_pkg_if_absent javascript-typescript-langserver
 
 println "SUCCESS! Enjoy your new setup!"
 exit 0
